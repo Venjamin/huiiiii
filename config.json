@@ -1,0 +1,15 @@
+{
+  "rootFolder": "C:\\Users\\j2ck\\IdeaProjects\\parazero",
+  "isLicenseApproved": true,
+  "isFirstStart": false,
+  "syncTimeMin": 1440,
+  "drones": [
+    {
+      "UID": "003B003A 31375119 38323937",
+      "Product": "SmartAir Nano",
+      "SWVersion": 1.18,
+      "DroneType": "null: null",
+      "DroneName": ""
+    }
+  ]
+}

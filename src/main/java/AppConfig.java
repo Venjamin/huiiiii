@@ -6,6 +6,8 @@ import java.util.List;
 public class AppConfig {
     private String rootFolder;
     private Boolean isLicenseApproved;
+    private Boolean isFirstStart;
+    private Integer syncTimeMin;
     private List<Drone> drones;
 
     @Data

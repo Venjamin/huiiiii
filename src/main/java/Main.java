@@ -1,23 +1,22 @@
+import com.apple.eawt.Application;
+import com.box.sdk.*;
+import com.google.gson.Gson;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.awt.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.TimerTask;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import com.box.sdk.*;
-
-import java.util.Timer;
 import java.util.stream.Collectors;
-
-import com.apple.eawt.Application;
-import com.google.gson.Gson;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import static java.lang.Thread.sleep;
 
@@ -25,18 +24,41 @@ import static java.lang.Thread.sleep;
 public final class Main {
     private static final int MAX_DEPTH = 1;
     private static final String FILE = "130221054_h0cwr96v_config.json";
-    public static  final String UPD_FOLDER_ID = "60790193719";
-    public static  final String LOG_FOLDER_ID = "60790087023";
+    public static final String UPD_FOLDER_ID = "60790193719";
+    public static final String LOG_FOLDER_ID = "60790087023";
+    public static TrayIcon trayIcon;
+    public static OSType osType;
+    public static AppConfig APP_CONFIG;
 
 
+    private Main() {
+    }
 
-    private Main() { }
+    public static void main(String[] args) throws InterruptedException, IOException {
 
-    public static void main(String[] args) throws AWTException, IOException, InterruptedException {
+        final String os = System.getProperty("os.name", "nix").toLowerCase();
+        // OS-specific
+        if (os.startsWith("win")) {
+            osType = OSType.WIN;
+        } else if (os.startsWith("mac")) {
+            osType = OSType.MAC;
+        }
 
+        File file = new File("config.json");
+        if (!file.exists()) {
+            AppConfig defaultConfig = new AppConfig();
+            defaultConfig.setIsLicenseApproved(false);
+            defaultConfig.setIsFirstStart(true);
+            defaultConfig.setSyncTimeMin(60 * 24);
+            defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
+            saveAppConfig(defaultConfig);
+        }
+        String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
+        APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
         Timer timer = new Timer(false);
-        timer.schedule(new PereodikCheck(), 0, 60*1000);
+            timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
+
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
         BoxDeveloperEditionAPIConnection api = getApi();
@@ -52,20 +74,19 @@ public final class Main {
         String folderId = "";
         createFolder(logFolder, hostName);
         HashMap<String, String> map = getFolder(logFolder, 1);
-        for (String k : map.keySet()){
-            if (k.equals(hostName)){
+        for (String k : map.keySet()) {
+            if (k.equals(hostName)) {
                 folderId = map.get(k);
             }
         }
         BoxFolder compFolder = new BoxFolder(api, folderId);
         createFolder(compFolder, "Smart Air Nano");
         map = getFolder(compFolder, 1);
-        for (String k : map.keySet()){
-            if (k.equals("Smart Air Nano")){
+        for (String k : map.keySet()) {
+            if (k.equals("Smart Air Nano")) {
                 folderId = map.get(k);
             }
         }
-
 
 
 //        listFolder(rootFolder, 0);
@@ -87,7 +108,7 @@ public final class Main {
         while (true) {
             sleep(24 * 60 * 60 * 1000);
         }
-        }
+    }
 
     public static BoxDeveloperEditionAPIConnection getApi() {
         BoxAppSettings boxAppSettings = new BoxAppSettings();
@@ -111,9 +132,17 @@ public final class Main {
         File f = new File(path);
         if (f.exists() && f.isDirectory()) {
             return true;
-        }
-        else {
+        } else {
             return false;
+        }
+    }
+
+    public static void saveAppConfig(AppConfig appConfig) {
+        File file = new File("config.json");
+        try {
+            Files.write(file.toPath(), new Gson().toJson(appConfig).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -143,8 +172,7 @@ public final class Main {
     public static void createFolder(BoxFolder parentFolder, String folderName) {
         try {
             BoxFolder.Info childFolderInfo = parentFolder.createFolder(folderName);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -153,14 +181,11 @@ public final class Main {
     public static String getHostName() {
         String hostname = "Unknown";
 
-        try
-        {
+        try {
             InetAddress addr;
             addr = InetAddress.getLocalHost();
             hostname = addr.getHostName();
-        }
-        catch (UnknownHostException ex)
-        {
+        } catch (UnknownHostException ex) {
             System.out.println("Hostname can not be resolved");
         }
         return hostname;
@@ -185,7 +210,6 @@ public final class Main {
             String publicKeyID = (String) appAuth.get("publicKeyID");
             String privateKey = (String) appAuth.get("privateKey");
             String passphrase = (String) appAuth.get("passphrase");
-
 
 
             BoxAppSettings boxSettings = new BoxAppSettings(clientID, clientSecret, publicKeyID, privateKey,
@@ -218,7 +242,7 @@ public final class Main {
     }
 
     public static HashMap<String, String> getFolder(BoxFolder folder, int depth) {
-        HashMap<String, String> map = new HashMap<>();;
+        HashMap<String, String> map = new HashMap<>();
         for (BoxItem.Info itemInfo : folder) {
             String indent = "";
             for (int i = 0; i < depth; i++) {
@@ -226,9 +250,6 @@ public final class Main {
             }
 
             map.put(itemInfo.getName(), itemInfo.getID());
-
-
-
 
 
         }
@@ -239,14 +260,16 @@ public final class Main {
     public static void showNotification(String title, String msg) throws AWTException {
         SystemTray tray = SystemTray.getSystemTray();
         Image image = Toolkit.getDefaultToolkit().getImage(Main.class.getResource("parazero-logo-final.png"));
-        Application application = Application.getApplication();
-        application.setDockIconImage(image);
-        TrayIcon trayIcon = new TrayIcon(image);
-        trayIcon.setImageAutoSize(true);
-        tray.add(trayIcon);
+        if (osType.equals(OSType.MAC)) {
+            Application application = Application.getApplication();
+            application.setDockIconImage(image);
+        }
+        if (Objects.isNull(trayIcon)) {
+            trayIcon = new TrayIcon(image);
+            trayIcon.setImageAutoSize(true);
+            tray.add(trayIcon);
+        }
         trayIcon.displayMessage(title, msg, TrayIcon.MessageType.INFO);
-
-
 
 
     }
