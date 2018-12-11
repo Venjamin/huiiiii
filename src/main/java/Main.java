@@ -3,6 +3,8 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import java.nio.file.Files;
+import java.util.HashMap;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,26 +12,84 @@ import java.util.logging.Logger;
 import com.box.sdk.*;
 
 import java.util.Timer;
+import java.util.stream.Collectors;
+
 import com.apple.eawt.Application;
+import com.google.gson.Gson;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-
+import static java.lang.Thread.sleep;
 
 
 public final class Main {
     private static final int MAX_DEPTH = 1;
     private static final String FILE = "130221054_h0cwr96v_config.json";
+    public static  final String UPD_FOLDER_ID = "60790193719";
+    public static  final String LOG_FOLDER_ID = "60790087023";
 
 
 
     private Main() { }
 
-    public static void main(String[] args) throws AWTException, IOException {
-        Timer timer = new Timer(true);
-        timer.schedule(new SayHello(), 0, 50*1000);
+    public static void main(String[] args) throws AWTException, IOException, InterruptedException {
+
+
+        Timer timer = new Timer(false);
+        timer.schedule(new PereodikCheck(), 0, 60*1000);
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
+        BoxDeveloperEditionAPIConnection api = getApi();
+
+
+        BoxUser.Info userInfo = BoxUser.getCurrentUser(api).getInfo();
+        System.out.format("Welcome, %s <%s>!\n\n", userInfo.getName(), userInfo.getLogin());
+
+        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
+        BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
+//-----------Check folder with computer name------------------------------------------
+        String hostName = getHostName();
+        String folderId = "";
+        createFolder(logFolder, hostName);
+        HashMap<String, String> map = getFolder(logFolder, 1);
+        for (String k : map.keySet()){
+            if (k.equals(hostName)){
+                folderId = map.get(k);
+            }
+        }
+        BoxFolder compFolder = new BoxFolder(api, folderId);
+        createFolder(compFolder, "Smart Air Nano");
+        map = getFolder(compFolder, 1);
+        for (String k : map.keySet()){
+            if (k.equals("Smart Air Nano")){
+                folderId = map.get(k);
+            }
+        }
+
+
+
+//        listFolder(rootFolder, 0);
+
+        System.out.println(hostName);
+//        try {
+//            uploadFile(test, "/Users/i344537/IdeaProjects/BoxTest/parazero-logo-final.png");
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        String fileId = "361128535082";
+//        downloadFile(api, fileId);
+//        moveFile("logo", "downloads/");
+//        Boolean isDirectory = checkFolderExist("downloads/");
+//        System.out.println(isDirectory);
+//
+//        showNotification("Test", "Test message!");
+        while (true) {
+            sleep(24 * 60 * 60 * 1000);
+        }
+        }
+
+    public static BoxDeveloperEditionAPIConnection getApi() {
         BoxAppSettings boxAppSettings = new BoxAppSettings();
         boxAppSettings = readJSON(FILE);
 
@@ -43,39 +103,11 @@ public final class Main {
         BoxConfig boxConfig = new BoxConfig(boxAppSettings.getClientID(), boxAppSettings.getClientSecret(), boxAppSettings.getEnterpriseID(), jwtPreferences);
 
         BoxDeveloperEditionAPIConnection api = BoxDeveloperEditionAPIConnection.getAppEnterpriseConnection(boxConfig);
+        return api;
+    }
 
 
-
-
-        BoxUser.Info userInfo = BoxUser.getCurrentUser(api).getInfo();
-        System.out.format("Welcome, %s <%s>!\n\n", userInfo.getName(), userInfo.getLogin());
-
-        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
-        String folderName = "test_create1";
-        BoxFolder test = new BoxFolder(api, "59900368423");
-        createFolder(test, folderName);
-        listFolder(rootFolder, 0);
-        String hostName = getHostName();
-        System.out.println(hostName);
-        try {
-            uploadFile(test, "/Users/i344537/IdeaProjects/BoxTest/parazero-logo-final.png");
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        String fileId = "361128535082";
-        downloadFile(api, fileId);
-        moveFile("logo", "downloads/");
-        Boolean isDirectory = checkFolderExist("downloads/");
-        System.out.println(isDirectory);
-
-        showNotification("Test", "Test message!");
-
-        }
-
-
-
-    private static boolean checkFolderExist(String path) {
+    public static boolean checkFolderExist(String path) {
         File f = new File(path);
         if (f.exists() && f.isDirectory()) {
             return true;
@@ -85,22 +117,22 @@ public final class Main {
         }
     }
 
-    private static void moveFile(String filename, String filepath) {
+    public static void moveFile(String filename, String filepath) {
         File a = new File(filename);
         a.renameTo(new File(filepath + a.getName()));
         a.delete();
     }
 
-    private static void downloadFile(BoxDeveloperEditionAPIConnection api, String fileId) throws IOException {
+    public static void downloadFile(BoxDeveloperEditionAPIConnection api, String fileId, String path) throws IOException {
         BoxFile file = new BoxFile(api, fileId);
         BoxFile.Info info = file.getInfo();
 
-        FileOutputStream stream = new FileOutputStream(info.getName());
+        FileOutputStream stream = new FileOutputStream(path + info.getName());
         file.download(stream);
         stream.close();
     }
 
-    private static void uploadFile(BoxFolder folder, String file) throws IOException {
+    public static void uploadFile(BoxFolder folder, String file) throws IOException {
 
         FileInputStream stream = new FileInputStream(file);
         BoxFile.Info newFileInfo = folder.uploadFile(stream, "logo.png");
@@ -108,7 +140,7 @@ public final class Main {
     }
 
 
-    private static void createFolder(BoxFolder parentFolder, String folderName) {
+    public static void createFolder(BoxFolder parentFolder, String folderName) {
         try {
             BoxFolder.Info childFolderInfo = parentFolder.createFolder(folderName);
         }
@@ -118,7 +150,7 @@ public final class Main {
 
     }
 
-    private static String getHostName() {
+    public static String getHostName() {
         String hostname = "Unknown";
 
         try
@@ -135,7 +167,7 @@ public final class Main {
     }
 
 
-    private static BoxAppSettings readJSON(String file) {
+    public static BoxAppSettings readJSON(String file) {
         JSONParser parser = new JSONParser();
 
         try {
@@ -167,7 +199,7 @@ public final class Main {
         return null;
     }
 
-    private static void listFolder(BoxFolder folder, int depth) {
+    public static void listFolder(BoxFolder folder, int depth) {
         for (BoxItem.Info itemInfo : folder) {
             String indent = "";
             for (int i = 0; i < depth; i++) {
@@ -185,7 +217,26 @@ public final class Main {
         }
     }
 
-    private static void showNotification(String title, String msg) throws AWTException {
+    public static HashMap<String, String> getFolder(BoxFolder folder, int depth) {
+        HashMap<String, String> map = new HashMap<>();;
+        for (BoxItem.Info itemInfo : folder) {
+            String indent = "";
+            for (int i = 0; i < depth; i++) {
+                indent += "    ";
+            }
+
+            map.put(itemInfo.getName(), itemInfo.getID());
+
+
+
+
+
+        }
+        return map;
+    }
+
+
+    public static void showNotification(String title, String msg) throws AWTException {
         SystemTray tray = SystemTray.getSystemTray();
         Image image = Toolkit.getDefaultToolkit().getImage(Main.class.getResource("parazero-logo-final.png"));
         Application application = Application.getApplication();
@@ -202,8 +253,3 @@ public final class Main {
 
 }
 
-class SayHello extends TimerTask {
-    public void run() {
-        System.out.println("Hello World!");
-    }
-}

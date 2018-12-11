@@ -5,12 +5,12 @@ import java.util.List;
 @Data
 public class DeviceParams {
     private String HWVersion;
-    private Double FWVersion;
+    private String FWVersion;
     private Boolean isCriticalUpdate;
     private List<String> Changelog;
     private List<DroneConfig> DroneTypes;
 
-    public DeviceParams(String HWVersion, double FWVersion) {
+    public DeviceParams(String HWVersion, String FWVersion) {
         this.HWVersion = HWVersion;
         this.FWVersion = FWVersion;
     }
