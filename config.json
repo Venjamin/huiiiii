@@ -10,6 +10,13 @@
       "SWVersion": 1.18,
       "DroneType": "null: null",
       "DroneName": ""
+    },
+    {
+      "UID": "003B003A 31375119 38323935",
+      "Product": "SmartAir V2",
+      "SWVersion": 2.20,
+      "DroneType": "null: null",
+      "DroneName": ""
     }
   ]
 }

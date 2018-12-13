@@ -67,7 +67,8 @@
                                 implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                             <manifestEntries>
                                 <Main-Class>Main</Main-Class>
-                                <Class-Path>. ./jce-jars/bcprov-jdk15on-1.52.jar ./jce-jars/bcpkix-jdk15on-1.52.jar</Class-Path>
+                                <Class-Path>. ./jce-jars/bcprov-jdk15on-1.52.jar ./jce-jars/bcpkix-jdk15on-1.52.jar
+                                </Class-Path>
                             </manifestEntries>
                         </transformer>
                     </transformers>

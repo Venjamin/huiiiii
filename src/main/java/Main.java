@@ -1,7 +1,6 @@
 import com.apple.eawt.Application;
 import com.box.sdk.*;
 import com.google.gson.Gson;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -11,7 +10,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.Security;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Timer;
@@ -25,7 +23,8 @@ import static java.lang.Thread.sleep;
 public final class Main {
     private static final int MAX_DEPTH = 1;
     private static final String FILE = "130221054_h0cwr96v_config.json";
-    public static final String UPD_FOLDER_ID = "60790193719";
+    public static final String NANO_UPD_FOLDER_ID = "60790193719";
+    public static final String V2_UPD_FOLDER_ID = "";
     public static final String LOG_FOLDER_ID = "60790087023";
     public static TrayIcon trayIcon;
     public static OSType osType;
@@ -36,7 +35,6 @@ public final class Main {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-        Security.addProvider(new BouncyCastleProvider());
         final String os = System.getProperty("os.name", "nix").toLowerCase();
         // OS-specific
         if (os.startsWith("win")) {
@@ -112,10 +110,10 @@ public final class Main {
     }
 
     public static BoxDeveloperEditionAPIConnection getApi() {
-        BoxAppSettings boxAppSettings = new BoxAppSettings();
-        boxAppSettings = readJSON(FILE);
-
-
+        BoxAppSettings boxAppSettings = readJSON(FILE);
+        if (Objects.isNull(boxAppSettings)) {
+            throw new RuntimeException("Can't get boxAppSettings");
+        }
         JWTEncryptionPreferences jwtPreferences = new JWTEncryptionPreferences();
         jwtPreferences.setPublicKeyID(boxAppSettings.getPublicKeyID());
         jwtPreferences.setPrivateKeyPassword(boxAppSettings.getPassphrase());

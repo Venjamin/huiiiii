@@ -18,5 +18,13 @@ public class AppConfig {
         private Double SWVersion;
         private String DroneType;
         private String DroneName;
+
+        public DeviceType getDeviceType() {
+            if (Product.toLowerCase().contains("nano")) {
+                return DeviceType.NANO;
+            } else {
+                return DeviceType.V2;
+            }
+        }
     }
 }
