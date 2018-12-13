@@ -1,6 +1,7 @@
 import com.apple.eawt.Application;
 import com.box.sdk.*;
 import com.google.gson.Gson;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -10,9 +11,9 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Security;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +36,7 @@ public final class Main {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-
+        Security.addProvider(new BouncyCastleProvider());
         final String os = System.getProperty("os.name", "nix").toLowerCase();
         // OS-specific
         if (os.startsWith("win")) {
@@ -57,7 +58,7 @@ public final class Main {
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
         Timer timer = new Timer(false);
-            timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
+        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
 
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
