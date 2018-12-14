@@ -12,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -22,7 +25,8 @@ import static java.lang.Thread.sleep;
 public final class Main {
     private static final int MAX_DEPTH = 1;
     private static final String FILE = "130221054_h0cwr96v_config.json";
-    public static final String UPD_FOLDER_ID = "60790193719";
+    public static final String NANO_UPD_FOLDER_ID = "60790193719";
+    public static final String V2_UPD_FOLDER_ID = "";
     public static final String LOG_FOLDER_ID = "60790087023";
     public static TrayIcon trayIcon;
     public static OSType osType;
@@ -33,7 +37,6 @@ public final class Main {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException {
-
         final String os = System.getProperty("os.name", "nix").toLowerCase();
         // OS-specific
         if (os.startsWith("win")) {
@@ -55,7 +58,7 @@ public final class Main {
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
         Timer timer = new Timer(false);
-            timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
+        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
 
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
@@ -203,10 +206,10 @@ public final class Main {
     }
 
     public static BoxDeveloperEditionAPIConnection getApi() {
-        BoxAppSettings boxAppSettings = new BoxAppSettings();
-        boxAppSettings = readJSON(FILE);
-
-
+        BoxAppSettings boxAppSettings = readJSON(FILE);
+        if (Objects.isNull(boxAppSettings)) {
+            throw new RuntimeException("Can't get boxAppSettings");
+        }
         JWTEncryptionPreferences jwtPreferences = new JWTEncryptionPreferences();
         jwtPreferences.setPublicKeyID(boxAppSettings.getPublicKeyID());
         jwtPreferences.setPrivateKeyPassword(boxAppSettings.getPassphrase());
