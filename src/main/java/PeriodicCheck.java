@@ -31,7 +31,7 @@ class PeriodicCheck extends TimerTask {
                 }
                 doUpdateFlowByType(api, droneName, drone.getSWVersion() + "", drone.getDeviceType());
                 try {
-                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID());
+                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID().replace(" ", ""));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

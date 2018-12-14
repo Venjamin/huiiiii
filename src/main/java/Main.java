@@ -25,9 +25,9 @@ import static java.lang.Thread.sleep;
 public final class Main {
     private static final int MAX_DEPTH = 1;
     private static final String FILE = "717438__config.json";
-    public static final String NANO_UPD_FOLDER_ID = "60790193719";
-    public static final String V2_UPD_FOLDER_ID = "";
-    public static final String LOG_FOLDER_ID = "60790087023";
+    public static final String NANO_UPD_FOLDER_ID = "61187224949";
+    public static final String V2_UPD_FOLDER_ID = "61183179245";
+    public static final String LOG_FOLDER_ID = "61181527968";
     public static TrayIcon trayIcon;
     public static OSType osType;
     public static AppConfig APP_CONFIG;
@@ -58,8 +58,8 @@ public final class Main {
         String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
-//        Timer timer = new Timer(false);
-//        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
+        Timer timer = new Timer(false);
+        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
 
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
@@ -74,7 +74,7 @@ public final class Main {
 
 
 
-        listFolder(rootFolder, 0);
+//        listFolder(rootFolder, 0);
 
 
 //        uploadLogs(logFolder, api);
@@ -126,7 +126,7 @@ public final class Main {
 
 
         BoxFolder compFolder = new BoxFolder(api, folderId);
-        folderId = createFolderAndGetId(compFolder, "Smart Air Nano");
+        folderId = createFolderAndGetId(compFolder, localDeviceFolder);
 
 //        String localDeviceFolder = "SmartAir Nano";
 //        String localDeviceIdsFolder = "003B003A3137511938323937";
