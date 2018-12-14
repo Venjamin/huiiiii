@@ -24,7 +24,7 @@ class PeriodicCheck extends TimerTask {
             BoxDeveloperEditionAPIConnection api = Main.getApi();
             BoxFolder logFolder = new BoxFolder(api, Main.LOG_FOLDER_ID);
 
-            Optional.ofNullable(appConfig.getDrones()).ifPresent(drones -> drones.stream().forEach(drone -> {
+            Optional.ofNullable(appConfig.getDrones()).ifPresent(drones -> drones.forEach(drone -> {
                 String droneName = drone.getDroneName();
                 if (Objects.isNull(droneName) || droneName.isEmpty()) {
                     droneName = drone.getUID();
@@ -98,9 +98,9 @@ class PeriodicCheck extends TimerTask {
                     folderPrefix = "downloads" + File.separator + deviceType + File.separator;
                     currentFilePath = Paths.get(folderPrefix + aListDown.getKey());
                 }
-                if (!currentFilePath.toFile().exists()) {
-                    Main.downloadFile(api, fileID, folderPrefix);
-                }
+//                if (!currentFilePath.toFile().exists()) {
+                Main.downloadFile(api, fileID, folderPrefix);
+//                }
             }
             String configContent = Files.readAllLines(config).stream().collect(Collectors.joining("\n"));
             DeviceParams UPDATE_CONFIG = new Gson().fromJson(configContent, DeviceParams.class);
