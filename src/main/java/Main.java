@@ -37,7 +37,7 @@ public final class Main {
     private Main() {
     }
 
-    public static void main(String[] args) throws InterruptedException, IOException {
+    public static void main(String[] args) throws InterruptedException, IOException, AWTException {
         final String os = System.getProperty("os.name", "nix").toLowerCase();
         // OS-specific
         if (os.startsWith("win")) {
@@ -45,6 +45,7 @@ public final class Main {
         } else if (os.startsWith("mac")) {
             osType = OSType.MAC;
         }
+
 
         File file = new File("config.json");
         if (!file.exists()) {
@@ -55,6 +56,7 @@ public final class Main {
             defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
             saveAppConfig(defaultConfig);
         }
+        showNotification("Start background service", "Service started");
         String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
