@@ -24,13 +24,14 @@ import static java.lang.Thread.sleep;
 
 public final class Main {
     private static final int MAX_DEPTH = 1;
-    private static final String FILE = "130221054_h0cwr96v_config.json";
+    private static final String FILE = "717438__config.json";
     public static final String NANO_UPD_FOLDER_ID = "60790193719";
     public static final String V2_UPD_FOLDER_ID = "";
     public static final String LOG_FOLDER_ID = "60790087023";
     public static TrayIcon trayIcon;
     public static OSType osType;
     public static AppConfig APP_CONFIG;
+    public static String localLogFolder = "devices/";
 
 
     private Main() {
@@ -57,8 +58,8 @@ public final class Main {
         String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
-        Timer timer = new Timer(false);
-        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
+//        Timer timer = new Timer(false);
+//        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
 
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
@@ -69,32 +70,15 @@ public final class Main {
         System.out.format("Welcome, %s <%s>!\n\n", userInfo.getName(), userInfo.getLogin());
 
         BoxFolder rootFolder = BoxFolder.getRootFolder(api);
-        BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
-
-        ArrayList<String> listDir = getListDirNames("devices/SmartAir Nano/003B003A3137511938323937/");
-        System.out.println(listDir.toString());
+//        BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
 
 
 
+        listFolder(rootFolder, 0);
 
 
-//        listFolder(rootFolder, 0);
+//        uploadLogs(logFolder, api);
 
-
-        uploadLogs(logFolder, api);
-//        try {
-//            uploadFile(test, "/Users/i344537/IdeaProjects/BoxTest/parazero-logo-final.png");
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        String fileId = "361128535082";
-//        downloadFile(api, fileId);
-//        moveFile("logo", "downloads/");
-//        Boolean isDirectory = checkFolderExist("downloads/");
-//        System.out.println(isDirectory);
-//
-//        showNotification("Test", "Test message!");
         while (true) {
             sleep(24 * 60 * 60 * 1000);
         }
@@ -109,7 +93,7 @@ public final class Main {
                 return new File(current, name).isDirectory();
             }
         });
-        for (int i =0; i<directories.length; i++){
+        for (int i = 0; i < directories.length; i++) {
             listDir.add(directories[i]);
         }
 
@@ -126,15 +110,15 @@ public final class Main {
             }
         });
         System.out.println(Arrays.toString(directories));
-        for (int i =0; i<directories.length; i++){
+        for (int i = 0; i < directories.length; i++) {
             listDir.add(directories[i]);
         }
 
         return listDir;
     }
 
-    public static void uploadLogs(BoxFolder logFolder, BoxDeveloperEditionAPIConnection api) throws IOException {
-        String localLogFolder = "devices/";
+    public static void uploadLogs(BoxFolder logFolder, BoxDeveloperEditionAPIConnection api, String localDeviceFolder, String localDeviceIdsFolder) throws IOException {
+
         //-----------Check folder with computer name------------------------------------------
         String hostName = getHostName();
         String folderId = "";
@@ -144,8 +128,8 @@ public final class Main {
         BoxFolder compFolder = new BoxFolder(api, folderId);
         folderId = createFolderAndGetId(compFolder, "Smart Air Nano");
 
-        String localDeviceFolder = "SmartAir Nano";
-        String localDeviceIdsFolder = "003B003A3137511938323937";
+//        String localDeviceFolder = "SmartAir Nano";
+//        String localDeviceIdsFolder = "003B003A3137511938323937";
         ArrayList<String> deviceFolder = getListDirNames(localLogFolder);
         for (String aDeviceFolder : deviceFolder) {
             if (aDeviceFolder.equals(localDeviceFolder)) {
@@ -163,23 +147,18 @@ public final class Main {
                         }
                         System.out.println(111);
 
-                        HashMap<String, String> existingFolders =getFolder(logsUploadFolder, 1);
+                        HashMap<String, String> existingFolders = getFolder(logsUploadFolder, 1);
                         for (String key : existingFolders.keySet()) {
-                            for (String anListFoldersToUpload : listFoldersToUpload){
-                                if (key.equals(anListFoldersToUpload)) {
-                                    listFoldersToUpload.remove(anListFoldersToUpload);
-                                }
-                            }
+                            listFoldersToUpload.remove(key);
                         }
                         String path = localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/";
-                        for (String anListFoldersToUpload : listFoldersToUpload){
+                        for (String anListFoldersToUpload : listFoldersToUpload) {
                             uploadFolder(logsUploadFolder, anListFoldersToUpload, api, path);
                         }
                     }
                 }
             }
         }
-
 
 
     }

@@ -1,0 +1,81 @@
+Country: IL, city: Tel Aviv
+Phantom: Phantom 1
+10/12/2018 00:17:07.046,!Application................: Start
+10/12/2018 00:17:18.636,!EEPROM Data................: OK.
+10/12/2018 00:17:18.643,!SD card....................: Free: 14.3 MB from: 15.7 MB
+10/12/2018 00:17:18.845,!LOG File...................: LOG_67_.CSV started
+10/12/2018 00:17:19.001,!Version....................: SmartAir Nano 1.19 Nov  5 2018 10:59:27
+10/12/2018 00:17:19.024,!MCU ID.....................: 003B003A 31375119 38323937
+10/12/2018 00:17:19.057,!ARM height..........[m].ARH: 1.0    [0.0   /5.0   /32000.0]
+10/12/2018 00:17:19.068,!DISARM height.......[m].DRH: 10.0   [-5000.0/3.0   /32000.0]
+10/12/2018 00:17:19.080,!Vibrations value.[m/s2].VIB: 0.0001 [0.0   /2.0   /12.0]
+10/12/2018 00:17:19.092,!No vibrations time..[s].NVI: 30     [1     /30    /3600  ]
+10/12/2018 00:17:19.104,!Vibrations time.....[s].VIT: 10     [0     /10    /3600  ]
+10/12/2018 00:17:19.116,!DISARM hgt/novib[1/2/3]DISE: 2      [0     /2     /3     ]
+10/12/2018 00:17:19.128,!ARM hgt/novib...[1/2/3]ARME: 2      [0     /2     /3     ]
+10/12/2018 00:17:19.140,!Vibrations freq...[sec].VIF: 100    [1     /100   /1000  ]
+10/12/2018 00:17:19.152,!Start ARM mode..........ARM: 1      [0     /2     /2     ] 0-Manual ARM/DIS,1-Manual ARM/Auto DIS,2-Auto ARM/DIS
+10/12/2018 00:17:19.165,!Start ARM mode.............: Manual ARM/Auto DISARM
+10/12/2018 00:17:19.187,!Roll calibr.value.[deg].RCV: 3.5    [-90.0 /0.0   /90.0  ]
+10/12/2018 00:17:19.198,!Pitch calibr.value[deg].PCV: 0.5    [-180.0/0.0   /180.0 ]
+10/12/2018 00:17:19.210,!Landing gear auto.[0/1].LGR: 0      [0     /0     /1     ]
+10/12/2018 00:17:19.222,!BARO sensor type........MST: 1      [0     /1     /1     ]
+10/12/2018 00:17:19.234,!IMU Configuration.......IMU: 38    
+10/12/2018 00:17:19.246,!IMU_ORIENTUS........[IMU+8]: DISABLED
+10/12/2018 00:17:19.257,!IMU_SENSAIR........[IMU+16]: DISABLED
+10/12/2018 00:17:19.268,!Use Servo/Pyro....[1/2]SVPY: 1      [0     /1     /2     ]
+10/12/2018 00:17:19.279,!Pyro Sensor resistance..SPR: 0.35   [0.00  /0.35  /2.00  ]
+10/12/2018 00:17:19.291,!Pyro test freq....[sec].PTS: 15     [0     /15    /32000 ]
+10/12/2018 00:17:19.303,!Min. Vcapacitor.....[V].PRV: 4.0    [-1.0  /4.0   /20.0  ]
+10/12/2018 00:17:19.315,!RC Configuration........RCE: 0      [0     /0     /3     ]
+10/12/2018 00:17:19.327,!RC Configuration....[RCE+1]: RC Fire Disabled
+10/12/2018 00:17:19.339,!RC Configuration....[RCE+2]: RC ARM/DISARM Disabled
+10/12/2018 00:17:19.351,!Main Bat. num of cells..BNC: 1      [1     /1     /6     ]
+10/12/2018 00:17:19.363,!Minimum bat voltage.....MCV: 3.1    [-1.0  /3.7   /6.0   ]
+10/12/2018 00:17:19.375,!Min servo power Vbat....SPV: 3.7    [0.0   /3.5   /5.0   ]
+10/12/2018 00:17:19.387,!External Bat. Enable....XBT: 0      [0     /0     /1     ]
+10/12/2018 00:17:19.399,!Trigger Delay...........MTD: 50     [0     /1     /30000 ]
+10/12/2018 00:17:19.411,!Trigger PWM on/off......PWM: 0      [0     /1     /1     ]
+10/12/2018 00:17:19.423,!Trigger PWM OFF..[usec]PSOF: 1500   [0     /1000  /2500  ]
+10/12/2018 00:17:19.435,!Trigger PWM ON...[usec]PSON: 2000   [0     /1900  /2500  ]
+10/12/2018 00:17:19.447,!Trigger PWM time..[sec]PSTO: 1      [0     /1     /500   ]
+10/12/2018 00:17:19.459,!Write after FIRE..[sec]RCST: 60     [0     /60    /1000  ]
+10/12/2018 00:17:19.471,!Destination.........[n].DST: 1000   [0     /10    /10000 ]
+10/12/2018 00:17:19.483,!Use SD card.............USD: 1      [0     /1     /1     ]
+10/12/2018 00:17:19.495,!Bat.check min...[100ms]BCLS: 0      [0     /20    /50    ]
+10/12/2018 00:17:19.507,!Bat.check max...[100ms]BCLL: 10     [0     /30    /50    ]
+10/12/2018 00:17:19.519,!Power Off/On min[100ms].POO: 40     [0     /40    /50    ]
+10/12/2018 00:17:19.531,!ARM/DIS 1 dur.  [100ms]ADFD: 5      [0     /5     /50    ]
+10/12/2018 00:17:19.543,!ARM/DIS 2 dur.  [100ms]ADSD: 20     [0     /15    /50    ]
+10/12/2018 00:17:19.555,!ARM/DIS 3 dur.  [100ms]ADTD: 50     [0     /50    /50    ]
+10/12/2018 00:17:19.567,!Approve UFW dur.[100ms].U10/12/2018 00:17:19.616,!LOG File...................: LOG_67_.CSV Free: 14.3 MB from: 15.7 MB
+10/12/2018 00:17:19.628,!KF process_noise........PNO: 0.2    [0.0   /0.2   /1000.0]
+10/12/2018 00:17:19.639,!KF sensor_noise.........SNO: 32.0   [0.0   /32.0  /1000.0]
+10/12/2018 00:17:19.651,!KF estimated_error......ESR: 100.0  [0.0   /100.0 /1000.0]
+10/12/2018 00:17:19.663,!KF initial_value........INV: 0.0    [0.0   /0.0   /1000.0]
+10/12/2018 00:17:19.675,!MF beta.................BET: 0.3    [0.0   /0.3   /1000.0]
+10/12/2018 00:17:19.687,!MF sampleRate...........SMR: 10.0   [0.0   /10.0  /1000.0]
+10/12/2018 00:17:19.699,!MF magnetic inclination.INC: 3.5    [0.0   /3.5   /1000.0]
+10/12/2018 00:17:19.723,!Mode....................TRG: 1      [0     /1     /2     ] 0-Manual TRG/1-Auto TRG/2-Maintenance mode
+10/12/2018 00:17:19.735,!Mode.......................: Auto triggering
+10/12/2018 00:17:19.757,!Attitude check......[IMU+1]: DISABLED
+10/12/2018 00:17:19.768,!Freefall detection..[IMU+2]: ENABLED
+10/12/2018 00:17:19.779,!Freefall duration..[ms].FFC: 1000   [0     /200   /30000 ] round to 10 ms
+10/12/2018 00:17:19.791,!Freefall limit..[m/s^2].FFL: 3.0    [0.1   /8.0   /9.0   ]
+10/12/2018 00:17:19.802,!Attitude rate check [IMU+4]: ENABLED
+10/12/2018 00:17:19.814,!Angular Speed.[deg/sec]ATRL: 150.0  [50.0  /150.0 /300.0 ] Roll/Pitch Rate Limit
+10/12/2018 00:17:19.827,!Angular Speed.....[deg].ATR: 35.0   [15.0  /35.0  /65.0  ] Roll/Pitch Att  Limit
+10/12/2018 00:17:19.839,!YAW  - Rate Lim...[d/s].YRL: 350.0  [50.0  /350.0 /500.0 ]
+10/12/2018 00:17:19.850,!Height limit check.[IMU+32]: ENABLED
+10/12/2018 00:17:19.862,!Height Lim..........[m].HGT: 1000   [30.0  /1000  /32000 ]
+10/12/2018 00:17:19.885,!Main battery...............: OK   - 	4.2V > 3.1V MCV
+10/12/2018 00:17:19.886,!Power 5V...................: OK - 	5.0V > 3.5V EC_5V_LOW
+10/12/2018 00:17:19.887,!Capacitor V DISARMed.......: OK - 	0.07V < 4.0V
+10/12/2018 00:17:20.498,!Orientation................: OK.
+10/12/2018 00:17:20.506,!Trigger servo power........: ON
+10/12/2018 00:17:20.515,!Initialization.............: Finished successfully. -0.8
+10/12/2018 00:17:20.517,!System.....................: IDLE
+10/12/2018 00:17:20.529,!Battery....................: Charging. 4.2V
+10/12/2018 00:17:20.530,Gyroscope data[deg/sec],,,Accelerometer data [m/s^2],,,Absolute Acc.[m/s^2],Magnetometer data [µT],,,Barometer data altitude, Pressure,Number of SenseAir message,Pitch,Roll,Yaw,Status of device,Main battery,Fire pulse width
+
+EOF

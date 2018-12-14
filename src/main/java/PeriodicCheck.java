@@ -21,13 +21,22 @@ class PeriodicCheck extends TimerTask {
             String localConfigContent = Files.readAllLines(pathConfigLocal).stream().collect(Collectors.joining("\n"));
             AppConfig appConfig = new Gson().fromJson(localConfigContent, AppConfig.class);
             Main.APP_CONFIG = appConfig;
+            BoxDeveloperEditionAPIConnection api = Main.getApi();
+            BoxFolder logFolder = new BoxFolder(api, Main.LOG_FOLDER_ID);
 
             Optional.ofNullable(appConfig.getDrones()).ifPresent(drones -> drones.stream().forEach(drone -> {
                 String droneName = drone.getDroneName();
                 if (Objects.isNull(droneName) || droneName.isEmpty()) {
                     droneName = drone.getUID();
                 }
-                doUpdateFlowByType(droneName, drone.getSWVersion() + "", drone.getDeviceType());
+                doUpdateFlowByType(api, droneName, drone.getSWVersion() + "", drone.getDeviceType());
+                try {
+                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
             }));
 
         } catch (IOException e) {
@@ -37,10 +46,10 @@ class PeriodicCheck extends TimerTask {
         System.out.println("Hello World!");
     }
 
-    private void doUpdateFlowByType(String droneName, String currentVersion, DeviceType deviceType) {
+    private void doUpdateFlowByType(BoxDeveloperEditionAPIConnection api, String droneName, String currentVersion, DeviceType deviceType) {
         try {
             ArrayList<AbstractMap.SimpleEntry<String, String>> listDown = new ArrayList<>();
-            BoxDeveloperEditionAPIConnection api = Main.getApi();
+
             BoxFolder deviceUpdate = null;
             switch (deviceType) {
                 case NANO: {

@@ -1,0 +1,12 @@
+{
+  "boxAppSettings": {
+    "clientID": "ag814uwkjytf4tq70211fexbzgmob2j9",
+    "clientSecret": "gxghK0ZgaBarVenDE7s4Dcle2h04HKCS",
+    "appAuth": {
+      "publicKeyID": "h0cwr96v",
+      "privateKey": "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIuH94X0vfA4ACAggA\nMBQGCCqGSIb3DQMHBAiVPOfuz2PekASCBMgXbNUHB+BlBQKAC9n4NNfj3pUIiDd4\n+obEunHX41OjxmaU/SEL20KtJ/v23qwjAiHSSlShz9zfHV0wIDG8wTTGgphEgBAF\nswmXK2Uv5M7F+piOQB1RW4asaE9C3mkbAuGp1jXlew9Thz5pkdlgXe1ulD+Mj/4F\nNwAmKLjHptlvjLjlZvq+ZJzSRxm4gIhMUs/b3RZ5anFZV2MXZx/B8Qp0LuapvA8w\nu8iWziL43hgD6Wd9EBhFIEVnKH3Rol/Jg7ZI84lxCH0LUtPVJqIRxKw4QfjH8wbs\n8675iIVW+bIpghb/Qnpnq0j4GXk8g0PSqLvh6ORUjONEWuBDXiyVZsNGKpOLmXmX\nuqOXRRfhkqGvkBSu9bTuWAQ66LainJXsGKOYZwfVIZ7qglU8CpwYVBvGgTV7jsgq\nbyyTSdTqIjK9brmfdqiyOCMUDF4tSrF5t9kF5xo/XxjVuB+FU6su4goJF2a1iEFW\nj+DuiU3Vo5DdLxQXh4BNK9I3WyVbrZSI83/P0KvlU8bb3Fzg66d4j7GSczQNqNqT\nKCQaF8icRjwIy+3plIAXdvFHlHrOKecm4tZu7uW12ki1CdSCLkc7rQWb5lK//JQW\n2HMhhBv2p60T4SFPOS0rLSYpi/6tHBWWUduk8daaaAPpzlhBQzamdG7Vd6qlWHSl\nIwUqecTuWY5gEAunPKNijCJZW5JsFPINV830xUmIgo5EgO/7CjlatOYzmx3+uq+c\nsq8E3QYTxit3vYdNpW9oQaLMPm6a9b+Sf0c3FuvXHmvqdbxr2SBkSBFZF7WZEih+\nqwEPpQ5QF9hrteDpgeZn2EhGRVtlIdtUfABwPkkJC7Sjk5r/fBQUMtf+uoDdqsms\nEIL/JMZD3Hde36AxtJjTq/d0YwzAAftUiw2UvVJ+x5PHI2sH05izx2fGUZVM1FO2\ns2rQ+sP8Irzg3yRd5jycLpFqiaPoKMxhFGcBdomNvOquOSZFsk1++s8VCfOCzJNl\nt4KEc/zBs4e0ws3YDAvAntqSmg2Do7MSj0osxIZYEra/us4H8ymwpf3SVPb12jIP\n6Oz0b74yvZYmxfFaZIpJbE/3NF8cHY1pDBRwDlZl2+GcDYCI3HKvqjqbC2oHPTmt\nvyIX5IuMDXXwpitiLQz4KfArcq+L0UElzaZUMM6FjYE+Fo2tREFc2nAKqnvrBssx\nR/tIUm7YUtSmg7H6jWQj35Cq1zXcJgLGHrUcRtgoIIn9dKghvb3itoow1zNqsLwK\nW4oV1PrL3kZB99W/GRU533LG0cD2bwpCtulgNT30QypLYbgfLfO4LJHPROrCGjKE\nRQNA5QUb8kSZ7alyVnJitwYP+ZdQREf1WvclZ1gkXB/fKHOGUrr2+BvHCgej1oWC\nNWsQZdOCE+x85bFNZcGf1orCgHibEc8MSsEKuym1tNHOISKXjiUA1twuUhRjbNYA\nEMlPGOwY8HB9IF0lR+JOtIumb/pr2NsApTwI9qA8AgOpsslHtE/jwY2XX52bMEVQ\nbfy6XWZzn+E7vS8utsYM5tyFfLwzuyy6KTWqoeOgP0eRgdQswsWbmlS/ODEZk81J\nI2kAebI2kX61vTCEPtmvHLxyZyvi4Tf4TBWdB4a5aapiqFx3mHx67NbYz0Etk5fN\nIW4=\n-----END ENCRYPTED PRIVATE KEY-----\n",
+      "passphrase": "c6a29b4c3c9b981a3e60bf60ebee82b1"
+    }
+  },
+  "enterpriseID": "130221054"
+}
