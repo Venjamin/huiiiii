@@ -97,8 +97,8 @@
                         <configuration>
                             <tasks>
                                 <echo>Copy of config</echo>
-                                <copy file="130221054_h0cwr96v_config.json"
-                                      tofile="${basedir}/target/130221054_h0cwr96v_config.json"/>
+                                <copy file="717438__config.json"
+                                      tofile="${basedir}/target/717438__config.json"/>
                             </tasks>
                         </configuration>
                     </execution>

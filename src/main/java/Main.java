@@ -51,7 +51,7 @@ public final class Main {
             AppConfig defaultConfig = new AppConfig();
             defaultConfig.setIsLicenseApproved(false);
             defaultConfig.setIsFirstStart(true);
-            defaultConfig.setSyncTimeMin(60 * 24);
+            defaultConfig.setSyncTimeMin(60);
             defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
             saveAppConfig(defaultConfig);
         }
@@ -59,7 +59,7 @@ public final class Main {
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
 
         Timer timer = new Timer(false);
-        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 1000);
+        timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 60 * 1000);
 
         // Turn off logging to prevent polluting the output.
         Logger.getLogger("com.box.sdk").setLevel(Level.OFF);
@@ -84,8 +84,7 @@ public final class Main {
         }
     }
 
-    public static ArrayList getListDirNames(String path) {
-        ArrayList<String> listDir = new ArrayList<>();
+    public static List<String> getListDirNames(String path) {
         File direktory = new File(path);
         String[] directories = direktory.list(new FilenameFilter() {
             @Override
@@ -93,15 +92,11 @@ public final class Main {
                 return new File(current, name).isDirectory();
             }
         });
-        for (int i = 0; i < directories.length; i++) {
-            listDir.add(directories[i]);
-        }
 
-        return listDir;
+        return new ArrayList<>(Arrays.asList(directories));
     }
 
-    public static ArrayList getListFileNames(String path) {
-        ArrayList<String> listDir = new ArrayList<>();
+    public static List<String> getListFileNames(String path) {
         File direktory = new File(path);
         String[] directories = direktory.list(new FilenameFilter() {
             @Override
@@ -110,11 +105,8 @@ public final class Main {
             }
         });
         System.out.println(Arrays.toString(directories));
-        for (int i = 0; i < directories.length; i++) {
-            listDir.add(directories[i]);
-        }
 
-        return listDir;
+        return new ArrayList<>(Arrays.asList(directories));
     }
 
     public static void uploadLogs(BoxFolder logFolder, BoxDeveloperEditionAPIConnection api, String localDeviceFolder, String localDeviceIdsFolder) throws IOException {
@@ -130,14 +122,14 @@ public final class Main {
 
 //        String localDeviceFolder = "SmartAir Nano";
 //        String localDeviceIdsFolder = "003B003A3137511938323937";
-        ArrayList<String> deviceFolder = getListDirNames(localLogFolder);
+        List<String> deviceFolder = getListDirNames(localLogFolder);
         for (String aDeviceFolder : deviceFolder) {
             if (aDeviceFolder.equals(localDeviceFolder)) {
-                ArrayList<String> idsFolder = getListDirNames(localLogFolder + localDeviceFolder + "/");
+                List<String> idsFolder = getListDirNames(localLogFolder + localDeviceFolder + "/");
                 for (String anIdsFolder : idsFolder) {
                     if (anIdsFolder.equals(localDeviceIdsFolder)) {
-                        ArrayList<String> filesToUploaad = getListFileNames(localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/");
-                        ArrayList<String> listFoldersToUpload = getListDirNames(localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/");
+                        List<String> filesToUploaad = getListFileNames(localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/");
+                        List<String> listFoldersToUpload = getListDirNames(localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/");
                         BoxFolder deviceIdsFolder = new BoxFolder(api, folderId);
                         folderId = createFolderAndGetId(deviceIdsFolder, localDeviceIdsFolder);
                         BoxFolder logsUploadFolder = new BoxFolder(api, folderId);
@@ -165,7 +157,7 @@ public final class Main {
 
     private static void uploadFolder(BoxFolder parentFolder, String name, BoxDeveloperEditionAPIConnection api, String path) throws IOException {
         String folderId = createFolderAndGetId(parentFolder, name);
-        ArrayList<String> filesToUploaad = getListFileNames(path + name + "/");
+        List<String> filesToUploaad = getListFileNames(path + name + "/");
         BoxFolder logsUploadFolder = new BoxFolder(api, folderId);
         for (String aFilesToUploaad : filesToUploaad) {
             uploadFile(logsUploadFolder, path + name + "/" + aFilesToUploaad, aFilesToUploaad);
@@ -230,9 +222,11 @@ public final class Main {
         BoxFile file = new BoxFile(api, fileId);
         BoxFile.Info info = file.getInfo();
 
-        FileOutputStream stream = new FileOutputStream(path + info.getName());
-        file.download(stream);
-        stream.close();
+        if (!Paths.get(path + info.getName()).toFile().exists()) {
+            FileOutputStream stream = new FileOutputStream(path + info.getName());
+            file.download(stream);
+            stream.close();
+        }
     }
 
     public static void uploadFile(BoxFolder folder, String file, String name) throws IOException {
