@@ -10,10 +10,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Timer;
+import java.util.*;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -69,29 +67,18 @@ public final class Main {
 
         BoxFolder rootFolder = BoxFolder.getRootFolder(api);
         BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
-//-----------Check folder with computer name------------------------------------------
-        String hostName = getHostName();
-        String folderId = "";
-        createFolder(logFolder, hostName);
-        HashMap<String, String> map = getFolder(logFolder, 1);
-        for (String k : map.keySet()) {
-            if (k.equals(hostName)) {
-                folderId = map.get(k);
-            }
-        }
-        BoxFolder compFolder = new BoxFolder(api, folderId);
-        createFolder(compFolder, "Smart Air Nano");
-        map = getFolder(compFolder, 1);
-        for (String k : map.keySet()) {
-            if (k.equals("Smart Air Nano")) {
-                folderId = map.get(k);
-            }
-        }
+
+        ArrayList<String> listDir = getListDirNames("devices/SmartAir Nano/003B003A3137511938323937/");
+        System.out.println(listDir.toString());
+
+
+
 
 
 //        listFolder(rootFolder, 0);
 
-        System.out.println(hostName);
+
+        uploadLogs(logFolder, api);
 //        try {
 //            uploadFile(test, "/Users/i344537/IdeaProjects/BoxTest/parazero-logo-final.png");
 //        }
@@ -108,6 +95,111 @@ public final class Main {
         while (true) {
             sleep(24 * 60 * 60 * 1000);
         }
+    }
+
+    public static ArrayList getListDirNames(String path) {
+        ArrayList<String> listDir = new ArrayList<>();
+        File direktory = new File(path);
+        String[] directories = direktory.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isDirectory();
+            }
+        });
+        for (int i =0; i<directories.length; i++){
+            listDir.add(directories[i]);
+        }
+
+        return listDir;
+    }
+
+    public static ArrayList getListFileNames(String path) {
+        ArrayList<String> listDir = new ArrayList<>();
+        File direktory = new File(path);
+        String[] directories = direktory.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File current, String name) {
+                return new File(current, name).isFile();
+            }
+        });
+        System.out.println(Arrays.toString(directories));
+        for (int i =0; i<directories.length; i++){
+            listDir.add(directories[i]);
+        }
+
+        return listDir;
+    }
+
+    public static void uploadLogs(BoxFolder logFolder, BoxDeveloperEditionAPIConnection api) throws IOException {
+        String localLogFolder = "devices/";
+        //-----------Check folder with computer name------------------------------------------
+        String hostName = getHostName();
+        String folderId = "";
+        folderId = createFolderAndGetId(logFolder, hostName);
+
+
+        BoxFolder compFolder = new BoxFolder(api, folderId);
+        folderId = createFolderAndGetId(compFolder, "Smart Air Nano");
+
+        String localDeviceFolder = "SmartAir Nano";
+        String localDeviceIdsFolder = "003B003A3137511938323937";
+        ArrayList<String> deviceFolder = getListDirNames(localLogFolder);
+        for (String aDeviceFolder : deviceFolder) {
+            if (aDeviceFolder.equals(localDeviceFolder)) {
+                ArrayList<String> idsFolder = getListDirNames(localLogFolder + localDeviceFolder + "/");
+                for (String anIdsFolder : idsFolder) {
+                    if (anIdsFolder.equals(localDeviceIdsFolder)) {
+                        ArrayList<String> filesToUploaad = getListFileNames(localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/");
+                        ArrayList<String> listFoldersToUpload = getListDirNames(localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/");
+                        BoxFolder deviceIdsFolder = new BoxFolder(api, folderId);
+                        folderId = createFolderAndGetId(deviceIdsFolder, localDeviceIdsFolder);
+                        BoxFolder logsUploadFolder = new BoxFolder(api, folderId);
+                        for (String aFilesToUploaad : filesToUploaad) {
+                            uploadFile(logsUploadFolder, localLogFolder + localDeviceFolder + "/" +
+                                    localDeviceIdsFolder + "/" + aFilesToUploaad, aFilesToUploaad);
+                        }
+                        System.out.println(111);
+
+                        HashMap<String, String> existingFolders =getFolder(logsUploadFolder, 1);
+                        for (String key : existingFolders.keySet()) {
+                            for (String anListFoldersToUpload : listFoldersToUpload){
+                                if (key.equals(anListFoldersToUpload)) {
+                                    listFoldersToUpload.remove(anListFoldersToUpload);
+                                }
+                            }
+                        }
+                        String path = localLogFolder + localDeviceFolder + "/" + localDeviceIdsFolder + "/";
+                        for (String anListFoldersToUpload : listFoldersToUpload){
+                            uploadFolder(logsUploadFolder, anListFoldersToUpload, api, path);
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+    }
+
+    private static void uploadFolder(BoxFolder parentFolder, String name, BoxDeveloperEditionAPIConnection api, String path) throws IOException {
+        String folderId = createFolderAndGetId(parentFolder, name);
+        ArrayList<String> filesToUploaad = getListFileNames(path + name + "/");
+        BoxFolder logsUploadFolder = new BoxFolder(api, folderId);
+        for (String aFilesToUploaad : filesToUploaad) {
+            uploadFile(logsUploadFolder, path + name + "/" + aFilesToUploaad, aFilesToUploaad);
+        }
+    }
+
+    private static String createFolderAndGetId(BoxFolder folder, String name) {
+        String folderId = "";
+        createFolder(folder, name);
+        HashMap<String, String> map = getFolder(folder, 1);
+        for (String k : map.keySet()) {
+            if (k.equals(name)) {
+                folderId = map.get(k);
+            }
+        }
+        return folderId;
     }
 
     public static BoxDeveloperEditionAPIConnection getApi() {
@@ -161,10 +253,14 @@ public final class Main {
         stream.close();
     }
 
-    public static void uploadFile(BoxFolder folder, String file) throws IOException {
+    public static void uploadFile(BoxFolder folder, String file, String name) throws IOException {
 
         FileInputStream stream = new FileInputStream(file);
-        BoxFile.Info newFileInfo = folder.uploadFile(stream, "logo.png");
+        try {
+            BoxFile.Info newFileInfo = folder.uploadFile(stream, name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         stream.close();
     }
 
