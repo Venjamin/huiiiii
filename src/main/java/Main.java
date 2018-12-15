@@ -88,24 +88,14 @@ public final class Main {
 
     public static List<String> getListDirNames(String path) {
         File direktory = new File(path);
-        String[] directories = direktory.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isDirectory();
-            }
-        });
+        String[] directories = direktory.list((current, name) -> new File(current, name).isDirectory());
 
         return new ArrayList<>(Arrays.asList(directories));
     }
 
     public static List<String> getListFileNames(String path) {
         File direktory = new File(path);
-        String[] directories = direktory.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File current, String name) {
-                return new File(current, name).isFile();
-            }
-        });
+        String[] directories = direktory.list((current, name) -> new File(current, name).isFile());
         System.out.println(Arrays.toString(directories));
 
         return new ArrayList<>(Arrays.asList(directories));
