@@ -24,6 +24,7 @@ import static java.lang.Thread.sleep;
 
 
 public final class Main {
+
     private static final int MAX_DEPTH = 1;
     private static final String FILE = "717438__config.json";
     public static final String NANO_UPD_FOLDER_ID = "61187224949";
@@ -263,19 +264,26 @@ public final class Main {
 
         try {
 
-            Object obj = parser.parse(new FileReader(file));
+//            Object obj = parser.parse(new FileReader(file));
+//
+//            JSONObject jsonObject = (JSONObject) obj;
+//
+//            String enterpriseID = (String) jsonObject.get("enterpriseID");
+//            JSONObject boxAppSettings = (JSONObject) jsonObject.get("boxAppSettings");
+//            String clientID = (String) boxAppSettings.get("clientID");
+//            String clientSecret = (String) boxAppSettings.get("clientSecret");
+//
+//            JSONObject appAuth = (JSONObject) boxAppSettings.get("appAuth");
+//            String publicKeyID = (String) appAuth.get("publicKeyID");
+//            String privateKey = (String) appAuth.get("privateKey");
+//            String passphrase = (String) appAuth.get("passphrase");
 
-            JSONObject jsonObject = (JSONObject) obj;
-
-            String enterpriseID = (String) jsonObject.get("enterpriseID");
-            JSONObject boxAppSettings = (JSONObject) jsonObject.get("boxAppSettings");
-            String clientID = (String) boxAppSettings.get("clientID");
-            String clientSecret = (String) boxAppSettings.get("clientSecret");
-
-            JSONObject appAuth = (JSONObject) boxAppSettings.get("appAuth");
-            String publicKeyID = (String) appAuth.get("publicKeyID");
-            String privateKey = (String) appAuth.get("privateKey");
-            String passphrase = (String) appAuth.get("passphrase");
+            String clientID = "mfk6ua7av9hm8qprupb69pq2ul9vxy5b";
+            String clientSecret = "8hCkhfz78kEuojeLsuX5EBU1Qaqf2OeB";
+            String publicKeyID = "erutna1d";
+            String privateKey = "-----BEGIN ENCRYPTED PRIVATE KEY-----\nMIIFDjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIzfOLQihwnwUCAggA\nMBQGCCqGSIb3DQMHBAhdCAC2sTMhMQSCBMhRJpBlEGdXyd/To8jIest8H+S6yIgd\nch9Ti52bV2vTnq0mGLyHiuVvJuJehJ5W0Sr7aSc5JoIcpxBWQlvOHbBLYDho8iaN\nehpq15Czz4qbWgiVw06mzo4igZj8uraB2LmhWjCKcEWbkLfjrdLLtiWPExZXx3Yr\nquJJ1jLgE0vYOZzjDeOnCZ9Dc5LSEa4FSvd3SVzGwg7yH83UnJ1ddycTqwDmGmu6\nbIupI95qFc8f/pQUnUPxJQVVJ/qE+ieXIcqg5i7uiDvPJnJo5xfqE5arCAFzzY73\nFF88a/28HreLc5mhv/xqlmndN69CQMj7MTmwsBs2+mlGi1lgontp4AYQbuRrPbNw\nOobsoZpuoqN+Nd6yogQEyAuV4PWWAWWBanvoHarnJ8EEs0dK6mVr7VF6KbSoSHnv\nzbUmOn2cxZrtl2QQuU3O65qRgWs0J0z6h7w38SzoKCvmj322xUtahgsSYOV+SoBV\nWoujCtPLiLbIBDxyoScwJ0koa9Beb2rxFnd0rTSMWn03vejQf4wNu/59zv67K2qW\nTnlZaTeqyQtMTFvfEV4HFQzbwzLNAqSV38FgBCAK730eYqukyvbBlmDT3lJaM7xW\nZKvYh39C4REhoonoGqcuglZEIfR8FDD6Vlbeid8AdCR54dwLS9uBUDkOUEv3Miui\nWtyKR/JTA2v5Ss1ufSy11kKW/1EUabmIsHGPvu6Pevtsnxj+0s8reSz/MoOSAmeq\n8ReUp85EZ4BtwwOh90pEPtrCZ4UMEHJnOp6TjowLktbCj7RPQRU8pxAQXKNtHjSB\n9Pi62YQkROeHxaes7aZid3XGCkt9ebqzAcfi+f09DpRjZfxgcowJNWpsvZZ8qkl2\nzcTWG7tvJEwe5GFr/sXmchGQjARJ/F5MpCHn/izM53etDWtNpyepigFMY00+E97V\nhk3E7bpwhiGVbWZDbEEC0DkcnMW1fWU4EQrWMYPGzEj4xcSCc1hvPOZutOFyoFW1\njfBlNmJ9947tV9ZJhZrchc6IrtMsaOLUSEjoMU13DSrAxZHoeJGAXgYxdopkbcKy\n+fKq7+rzizo7UYhWF4eTS39x/QJPm6y6df4MS2J8XIG9SearxOtxCRk3mTC8B7OF\njkt9rSJJ59KSIV1OdZ1iTA4m4VP02y4bB8U1zy6lUVaaU2BThG+BpCrkBZGM44lV\nhltMIxtKtLMJ6UrSOEUBkarb1LuH/NETwO3zZywCyOXUo4hEPCFTQauxqU/C5QO0\nVmaQee79GoTa6pH8b9diOYSk45kM4LvnZjFjoZ/OQc33HmSH/DCha4Bzqo2GGZMZ\nLnSHkh8YNRZde5NsGfkdqiO8qc1rz/2+oY4ZtAlKUpKLHhPHm2UEKaaxq9x7Iab9\nwxG9b7EFfHyXhg/3cspShrnqv2iy6hxoi0KQG6VccYMbDy+NPBDHgrxec3zUmm6J\nIZ3aBON2t74uChGyj2GlKdIo8ObhBaq3DSs+mSOMCrw6YlqRtw8P8DiJX3je3Nef\nYDbPh4zZVdd7vpnqeE4z02bB4N6qfjglo/RDprZ8mNtfZJ4aeuK16UVRo1q62Ixq\nVbFXzNIWGQ+ILhvPYwQOezVXlIeSKM7CvadrZDqGwEskgwt5dI+6h4GIJ6aeishy\n+IY=\n-----END ENCRYPTED PRIVATE KEY-----\n";
+            String passphrase = "68e03ddcb31650d5daca901548798fdd";
+            String enterpriseID = "717438";
 
 
             BoxAppSettings boxSettings = new BoxAppSettings(clientID, clientSecret, publicKeyID, privateKey,
