@@ -10,6 +10,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.security.Security;
 import java.util.*;
 import java.util.List;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public final class Main {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException, AWTException {
+        Security.setProperty("crypto.policy", "unlimited");
         final String os = System.getProperty("os.name", "nix").toLowerCase();
         // OS-specific
         if (os.startsWith("win")) {
