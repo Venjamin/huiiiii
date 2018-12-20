@@ -17,6 +17,7 @@ public class AppConfig {
         private String Product;
         private Double SWVersion;
         private String DroneType;
+        private String DroneModel;
         private String DroneName;
 
         public DeviceType getDeviceType() {

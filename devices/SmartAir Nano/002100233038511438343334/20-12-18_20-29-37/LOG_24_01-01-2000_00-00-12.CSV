@@ -1,0 +1,85 @@
+Country: IL, city: Gedera
+Mavic
+01/01/2000 00:00:00.046,!Application................: Start
+01/01/2000 00:00:11.634,!EEPROM Data................: OK.
+01/01/2000 00:00:11.643,!SD card....................: Free: 15.7 MB from: 15.7 MB
+01/01/2000 00:00:11.736,!LOG File...................: LOG_24_.CSV started
+01/01/2000 00:00:11.788,!Version....................: SmartAir Nano 1.21 Dec  6 2018 18:22:23
+01/01/2000 00:00:11.811,!MCU ID.....................: 00210023 30385114 38343334
+01/01/2000 00:00:11.844,!ARM height..........[m].ARH: 5.0    [0.0   /5.0   /32000.0]
+01/01/2000 00:00:11.855,!DISARM height.......[m].DRH: 3.0    [-5000.0/3.0   /32000.0]
+01/01/2000 00:00:11.867,!Vibrations value.[m/s2].VIB: 0.0800 [0.0   /2.0   /12.0]
+01/01/2000 00:00:11.879,!No vibrations time..[s].NVI: 30     [1     /30    /3600  ]
+01/01/2000 00:00:11.891,!Vibrations time.....[s].VIT: 10     [0     /10    /3600  ]
+01/01/2000 00:00:11.903,!Height STD..............HST: 0.3    [0.0   /0.3   /10.0]
+01/01/2000 00:00:11.915,!Auto DISARM.....[1+2+4]DISE: 2      [0     /2     /7     ]  +1 - low height, +2 - no vibrations, +4 - no vibrations & no height change
+01/01/2000 00:00:11.928,!Auto ARM..........[1+2]ARME: 3      [0     /2     /3     ]  +1 - height changed, +2 - vibrations
+01/01/2000 00:00:11.941,!Vibrations freq...[sec].VIF: 100    [1     /100   /1000  ]
+01/01/2000 00:00:11.952,!Start ARM mode..........ARM: 2      [0     /2     /2     ] 0-Manual ARM/DIS,1-Manual ARM/Auto DIS,2-Auto ARM/DIS
+01/01/2000 00:00:11.965,!Start ARM mode.............: Auto ARM/DISARM
+01/01/2000 00:00:11.987,!Roll calibr.value.[deg].RCV: -4.2   [-90.0 /0.0   /90.0  ]
+01/01/2000 00:00:11.998,!Pitch calibr.value[deg].PCV: 2.7    [-180.0/0.0   /180.0 ]
+01/01/2000 00:00:12.010,!Landing gear auto.[0/1].LGR: 0      [0     /0     /1     ]
+01/01/2000 00:00:12.022,!BARO sensor type........MST: 0      [0     /1     /3     ]
+01/01/2000 00:00:12.034,!IMU Configuration.......IMU: 55    
+01/01/2000 00:00:12.046,!IMU_ORIENTUS........[IMU+8]: DISABLED
+01/01/2000 00:00:12.057,!IMU_SENSAIR........[IMU+16]: ENABLED
+01/01/2000 00:00:12.068,!Use Servo/Pyro....[1/2]SVPY: 1      [0     /1     /2     ]
+01/01/2000 00:00:12.079,!Pyro Sensor resistance..SPR: 0.35   [0.00  /0.35  /2.00  ]
+01/01/2000 00:00:12.091,!Pyro test freq....[sec].PTS: 15     [0     /15    /32000 ]
+01/01/2000 00:00:12.103,!Min. Vcapacitor.....[V].PRV: 4.0    [-1.0  /4.0   /20.0  ]
+01/01/2000 00:00:12.115,!RC Configuration........RCE: 0      [0     /0     /3     ]
+01/01/2000 00:00:12.127,!RC Configuration....[RCE+1]: RC Fire Disabled
+01/01/2000 00:00:12.139,!RC Configuration....[RCE+2]: RC ARM/DISARM Disabled
+01/01/2000 00:00:12.151,!Main Bat. num of cells..BNC: 1      [1     /1     /6     ]
+01/01/2000 00:00:12.163,!Minimum bat voltage.....MCV: 3.7    [-1.0  /3.7   /6.0   ]
+01/01/2000 00:00:12.175,!Min servo power Vbat....SPV: 3.5    [0.0   /3.5   /5.0   ]
+01/01/2000 00:00:12.187,!External Bat. Enable....XBT: 0      [0     /0     /1     ]
+01/01/2000 00:00:12.199,!Trigger Delay...........MTD: 1      [0     /1     /30000 ]
+01/01/2000 00:00:12.211,!Trigger PWM on/off......PWM: 1      [0     /1     /1     ]
+01/01/2000 00:00:12.223,!Trigger PWM OFF..[usec]PSOF: 1000   [0     /1000  /2500  ]
+01/01/2000 00:00:12.235,!Trigger PWM ON...[usec]PSON: 1900   [0     /1900  /2500  ]
+01/01/2000 00:00:12.247,!Trigger PWM time..[sec]PSTO: 1      [0     /1     /500   ]
+01/01/2000 00:00:12.259,!Write after FIRE..[sec]RCST: 60     [0     /60    /1000  ]
+01/01/2000 00:00:12.271,!Destination.........[n].DST: 10     [0     /10    /10000 ]
+01/01/2000 00:00:12.283,!Use SD card.............USD: 1      [0     /1     /1     ]
+01/01/2000 00:00:12.295,!Bat.check min...[100ms]BCLS: 20     [0     /20    /500   ]
+01/01/2000 00:00:12.307,!Bat.check max...[100ms]BCLL: 30     [0     /30    /500   ]
+01/01/2000 00:00:12.319,!Power Off/On min[100ms].POO: 40     [0     /200   /500   ]
+01/01/2000 00:00:12.331,!ARM/DIS 1 dur.  [100ms]ADFD: 5      [0     /100   /500   ]
+01/01/2000 00:00:12.343,!ARM/DI01/01/2000 00:00:12.390,!ARM/DIS 3 dur.  [100ms]ADTD: 50     [0     /300   /500   ]
+01/01/2000 00:00:12.401,!Approve UFW dur.[100ms].UFW: 80     [0     /80    /500   ]
+01/01/2000 00:00:12.413,!LOG File...................: LOG_24_.CSV Free: 15.7 MB from: 15.7 MB
+01/01/2000 00:00:12.426,!KF process_noise........PNO: 0.2    [0.0   /0.2   /1000.0]
+01/01/2000 00:00:12.437,!KF sensor_noise.........SNO: 32.0   [0.0   /32.0  /1000.0]
+01/01/2000 00:00:12.449,!KF estimated_error......ESR: 100.0  [0.0   /100.0 /1000.0]
+01/01/2000 00:00:12.461,!KF initial_value........INV: 0.0    [0.0   /0.0   /1000.0]
+01/01/2000 00:00:12.473,!MF beta.................BET: 0.3    [0.0   /0.3   /1000.0]
+01/01/2000 00:00:12.485,!MF sampleRate...........SMR: 10.0   [0.0   /10.0  /1000.0]
+01/01/2000 00:00:12.497,!MF magnetic inclination.INC: 3.5    [0.0   /3.5   /1000.0]
+01/01/2000 00:00:12.521,!Mode....................TRG: 2      [0     /1     /2     ] 0-Manual TRG/1-Auto TRG/2-Maintenance mode
+01/01/2000 00:00:12.533,!Mode.......................: Maintenance mode
+01/01/2000 00:00:12.555,!Attitude check......[IMU+1]: ENABLED
+01/01/2000 00:00:12.566,!Att ROLL Lim......[deg]ATTR: 65.0   [20.0  /65.0  /90.0  ]
+01/01/2000 00:00:12.577,!Att PITCH Lim.....[deg]ATTP: 65.0   [20.0  /65.0  /90.0  ]
+01/01/2000 00:00:12.589,!Freefall detection..[IMU+2]: ENABLED
+01/01/2000 00:00:12.601,!Freefall duration..[ms].FFC: 200    [0     /200   /30000 ] round to 10 ms
+01/01/2000 00:00:12.613,!Freefall limit..[m/s^2].FFL: 2.7    [0.1   /1.8   /9.0   ]
+01/01/2000 00:00:12.624,!Attitude rate check [IMU+4]: ENABLED
+01/01/2000 00:00:12.636,!Angular Speed.[deg/sec]ATRL: 150.0  [50.0  /150.0 /300.0 ] Roll/Pitch Rate Limit
+01/01/2000 00:00:12.649,!Angular Speed.....[deg].ATR: 35.0   [15.0  /35.0  /65.0  ] Roll/Pitch Att  Limit
+01/01/2000 00:00:12.661,!YAW  - Rate Lim...[d/s].YRL: 350.0  [50.0  /350.0 /500.0 ]
+01/01/2000 00:00:12.672,!Height limit check.[IMU+32]: ENABLED
+01/01/2000 00:00:12.684,!Height Lim..........[m].HGT: 1000   [30.0  /1000  /32000 ]
+01/01/2000 00:00:12.707,!Main battery...............: OK   - 	4.2V > 3.7V MCV
+01/01/2000 00:00:12.708,!Power 5V...................: OK - 	5.2V > 3.5V EC_5V_LOW
+01/01/2000 00:00:12.709,!Capacitor V DISARMed.......: OK - 	0.03V < 4.0V
+01/01/2000 00:00:12.718,!Trigger servo power........: ON
+01/01/2000 00:00:12.726,!IMU BNO....................: OK. Mx:1.7 My:12.1 Mz:-19.1
+01/01/2000 00:00:12.727,!IMU Baro...................: OK. Baro:1019.0
+01/01/2000 00:00:12.728,!Initialization.............: Finished successfully. 0.0
+01/01/2000 00:00:12.730,!System.....................: MAINTENANCE
+01/01/2000 00:00:12.742,!Battery....................: Charging. 4.1V
+01/01/2000 00:00:12.743,Gyroscope data[deg/sec],,,Accelerometer data [m/s^2],,,Absolute Acc.[m/s^2],Magnetometer data [µT],,,Barometer data altitude, Pressure,Number of SenseAir message,Pitch,Roll,Yaw,Status of device,Main battery,Fire pulse width
+
+EOF

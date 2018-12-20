@@ -1,6 +1,7 @@
 import com.apple.eawt.Application;
 import com.box.sdk.*;
 import com.google.gson.Gson;
+import javafx.scene.shape.Box;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -29,6 +30,11 @@ public final class Main {
     private static final String FILE = "717438__config.json";
     public static final String NANO_UPD_FOLDER_ID = "61187224949";
     public static final String V2_UPD_FOLDER_ID = "61183179245";
+    public static final String NANO_LOG_FOLDER_ID = "61826054892";
+    public static final String V2_LOG_FOLDER_ID = "61833216057";
+    public static final String LOG_Mavic = "61825258272";
+    public static final String LOG_Phantom = "61821440993";
+    public static final String LOG_Other = "61829831872";
     public static final String LOG_FOLDER_ID = "61181527968";
     public static TrayIcon trayIcon;
     public static OSType osType;
@@ -59,9 +65,12 @@ public final class Main {
             defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
             saveAppConfig(defaultConfig);
         }
+
         showNotification("Start background service", "Service started");
         String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
+        String DronType = APP_CONFIG.getDrones().get(0).getDroneType();
+        String DronModel = APP_CONFIG.getDrones().get(0).getDroneModel();
 
         Timer timer = new Timer(false);
         timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 60 * 1000);
@@ -74,12 +83,12 @@ public final class Main {
         BoxUser.Info userInfo = BoxUser.getCurrentUser(api).getInfo();
         System.out.format("Welcome, %s <%s>!\n\n", userInfo.getName(), userInfo.getLogin());
 
-        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
+//        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
 //        BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
 
 
 
-//        listFolder(rootFolder, 0);
+//        listFolder(logFolder, 0);
 
 
 //        uploadLogs(logFolder, api);
@@ -104,12 +113,57 @@ public final class Main {
         return new ArrayList<>(Arrays.asList(directories));
     }
 
+    public static void uploadLogsTemp(BoxDeveloperEditionAPIConnection api) throws IOException {
+        String DronType = APP_CONFIG.getDrones().get(0).getDroneType();
+        String DronModel = APP_CONFIG.getDrones().get(0).getDroneModel();
+        String DroneUID = APP_CONFIG.getDrones().get(0).getUID().replace(" ", "");
+        String path = "devices/SmartAir Nano/" + DroneUID + "/";
+        String folderId = "";
+        BoxFolder typeFolder;
+        List<String> filesToUploaad = getListFileNames(path);
+        List<String> listFoldersToUpload = getListDirNames(path);
+
+
+        switch (DronType) {
+            case "Mavic": {
+                typeFolder = new BoxFolder(api, LOG_Mavic);
+                break;
+            }
+            case "Phantom": {
+                typeFolder = new BoxFolder(api, LOG_Phantom);
+                break;
+            }
+            default: {
+                typeFolder = new BoxFolder(api, LOG_Other);
+                break;
+            }
+        }
+        folderId = createFolderAndGetId(typeFolder, DronModel);
+        listFolder(typeFolder, 1);
+        System.out.println(folderId);
+        BoxFolder DronModelFolder = new BoxFolder(api, folderId);
+        folderId = createFolderAndGetId(DronModelFolder, DroneUID);
+        BoxFolder logsUploadFolder = new BoxFolder(api, folderId);
+        for (String aFilesToUploaad : filesToUploaad) {
+            uploadFile(logsUploadFolder, path + aFilesToUploaad, aFilesToUploaad);
+        }
+        HashMap<String, String> existingFolders = getFolder(logsUploadFolder, 1);
+        for (String key : existingFolders.keySet()) {
+            listFoldersToUpload.remove(key);
+        }
+
+        for (String anListFoldersToUpload : listFoldersToUpload) {
+            uploadFolder(logsUploadFolder, anListFoldersToUpload, api, path);
+        }
+
+    }
+
     public static void uploadLogs(BoxFolder logFolder, BoxDeveloperEditionAPIConnection api, String localDeviceFolder, String localDeviceIdsFolder) throws IOException {
 
         //-----------Check folder with computer name------------------------------------------
-        String hostName = getHostName();
+//        String hostName = getHostName();
         String folderId = "";
-        folderId = createFolderAndGetId(logFolder, hostName);
+//        folderId = createFolderAndGetId(logFolder, hostName);
 
 
         BoxFolder compFolder = new BoxFolder(api, folderId);
@@ -341,7 +395,7 @@ public final class Main {
         if (Objects.isNull(trayIcon)) {
             trayIcon = new TrayIcon(image);
             trayIcon.setImageAutoSize(true);
-            trayIcon.setToolTip("ParaZero service v1.0.2");
+            trayIcon.setToolTip("ParaZero service v1.0.3");
             tray.add(trayIcon);
         }
         trayIcon.displayMessage(title, msg, TrayIcon.MessageType.INFO);

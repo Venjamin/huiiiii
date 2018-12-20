@@ -11,6 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
+import org.apache.commons.io.FileUtils;
 
 @NoArgsConstructor
 class PeriodicCheck extends TimerTask {
@@ -27,11 +28,12 @@ class PeriodicCheck extends TimerTask {
             Optional.ofNullable(appConfig.getDrones()).ifPresent(drones -> drones.forEach(drone -> {
                 String droneName = drone.getDroneName();
                 if (Objects.isNull(droneName) || droneName.isEmpty()) {
-                    droneName = drone.getUID();
+                    droneName = drone.getUID().replace(" ", "");
                 }
                 doUpdateFlowByType(api, droneName, drone.getSWVersion() + "", drone.getDeviceType());
                 try {
-                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID().replace(" ", ""));
+//                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID().replace(" ", ""));
+                    Main.uploadLogsTemp(api);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -49,6 +51,7 @@ class PeriodicCheck extends TimerTask {
     private void doUpdateFlowByType(BoxDeveloperEditionAPIConnection api, String droneName, String currentVersion, DeviceType deviceType) {
         try {
             ArrayList<AbstractMap.SimpleEntry<String, String>> listDown = new ArrayList<>();
+            FileUtils.deleteDirectory(new File("downloads/"));
 
             BoxFolder deviceUpdate = null;
             switch (deviceType) {
