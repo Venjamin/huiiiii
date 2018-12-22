@@ -65,11 +65,9 @@ public final class Main {
         }
 
         showNotification("Start background service", "Service started");
+        new PeriodicCheck().run();
         String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
-        String DronType = APP_CONFIG.getDrones().get(0).getDroneType();
-        String DronModel = APP_CONFIG.getDrones().get(0).getDroneModel();
-
         Timer timer = new Timer(false);
         timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 60 * 1000);
 
