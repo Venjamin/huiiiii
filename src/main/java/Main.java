@@ -61,7 +61,7 @@ public final class Main {
             AppConfig defaultConfig = new AppConfig();
             defaultConfig.setIsLicenseApproved(false);
             defaultConfig.setIsFirstStart(true);
-            defaultConfig.setSyncTimeMin(60);
+            defaultConfig.setSyncTimeMin(1);
             defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
             saveAppConfig(defaultConfig);
         }
@@ -395,7 +395,7 @@ public final class Main {
         if (Objects.isNull(trayIcon)) {
             trayIcon = new TrayIcon(image);
             trayIcon.setImageAutoSize(true);
-            trayIcon.setToolTip("ParaZero service v1.0.3");
+            trayIcon.setToolTip("ParaZero service v1.0.5");
             tray.add(trayIcon);
         }
         trayIcon.displayMessage(title, msg, TrayIcon.MessageType.INFO);

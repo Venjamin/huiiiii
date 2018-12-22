@@ -70,18 +70,18 @@ class PeriodicCheck extends TimerTask {
             String folderPrefix = "downloads" + File.separator;
             String folderPref1 = ""; // uid
             for (String key : map.keySet()) {
-                if (!key.equals("config.json")) {
-                    System.out.println(key + map.get(key));
-                    BoxFolder updFiles = new BoxFolder(api, map.get(key));
-                    Map<String, String> map1 = Main.getFolder(updFiles, 1);
-                    for (String k : map1.keySet()) {
-                        folderPref1 = "";
-                        listDown.add(new AbstractMap.SimpleEntry<>(key, "f" + map1.get(k)));
-                        folderPref1 += key;
-                    }
-                } else {
+//                if (!key.equals("config.json")) {
+//                    System.out.println(key + map.get(key));
+//                    BoxFolder updFiles = new BoxFolder(api, map.get(key));
+//                    Map<String, String> map1 = Main.getFolder(updFiles, 1);
+//                    for (String k : map1.keySet()) {
+//                        folderPref1 = "";
+//                        listDown.add(new AbstractMap.SimpleEntry<>(key, "f" + map1.get(k)));
+//                        folderPref1 += key;
+//                    }
+//                } else {
                     listDown.add(new AbstractMap.SimpleEntry<>(key, map.get(key)));
-                }
+//                }
             }
             Files.createDirectories(getUpdatePath(deviceType, folderPrefix, folderPref1));
 
@@ -90,17 +90,17 @@ class PeriodicCheck extends TimerTask {
             String fileID;
             for (AbstractMap.SimpleEntry<String, String> aListDown : listDown) {
                 Path currentFilePath;
-                if (aListDown.getValue().substring(0, 1).equals("f")) {
-                    folderPrefix = "downloads" + File.separator + deviceType + File.separator;
-                    fileID = aListDown.getValue().substring(1);
-                    folderPrefix += folderPref1 + File.separator;
-                    currentFilePath = Paths.get(folderPrefix);
-
-                } else {
+//                if (aListDown.getValue().substring(0, 1).equals("f")) {
+//                    folderPrefix = "downloads" + File.separator + deviceType + File.separator;
+//                    fileID = aListDown.getValue().substring(1);
+//                    folderPrefix += folderPref1 + File.separator;
+//                    currentFilePath = Paths.get(folderPrefix);
+//
+//                } else {
                     fileID = aListDown.getValue();
                     folderPrefix = "downloads" + File.separator + deviceType + File.separator;
                     currentFilePath = Paths.get(folderPrefix + aListDown.getKey());
-                }
+//                }
 //                if (!currentFilePath.toFile().exists()) {
                 Main.downloadFile(api, fileID, folderPrefix);
 //                }
