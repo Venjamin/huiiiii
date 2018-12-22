@@ -26,7 +26,10 @@ class PeriodicCheck extends TimerTask {
             BoxFolder logFolder = new BoxFolder(api, Main.LOG_FOLDER_ID);
 
             Optional.ofNullable(appConfig.getDrones()).ifPresent(drones -> drones.forEach(drone -> {
-                String droneName = drone.getDroneName();
+                String droneType = drone.getDroneType();
+                String droneModel = drone.getDroneModel();
+
+                String droneName = Objects.isNull(droneModel) ? droneType : droneType + "-" + droneModel;
                 if (Objects.isNull(droneName) || droneName.isEmpty()) {
                     droneName = drone.getUID().replace(" ", "");
                 }
@@ -112,7 +115,7 @@ class PeriodicCheck extends TimerTask {
 
             // for now if FW version is double
 
-            double fwVersion = Double.parseDouble(UPDATE_CONFIG.getFWVersion());
+            double fwVersion = UPDATE_CONFIG.getFWVersion();
             double currVerDouble = Double.parseDouble(currentVersion);
             if (currVerDouble < fwVersion) {
                 Main.showNotification("Update required!", "Available new version " + UPDATE_CONFIG.getFWVersion() + "\nDrone: " + droneName);

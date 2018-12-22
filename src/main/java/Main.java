@@ -1,12 +1,13 @@
 import com.apple.eawt.Application;
 import com.box.sdk.*;
 import com.google.gson.Gson;
-import javafx.scene.shape.Box;
-import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
@@ -14,9 +15,6 @@ import java.nio.file.Paths;
 import java.security.Security;
 import java.util.*;
 import java.util.List;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -85,7 +83,6 @@ public final class Main {
 
 //        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
 //        BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
-
 
 
 //        listFolder(logFolder, 0);
