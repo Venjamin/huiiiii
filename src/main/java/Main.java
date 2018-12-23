@@ -52,23 +52,30 @@ public final class Main {
         } else if (os.startsWith("mac")) {
             osType = OSType.MAC;
         }
-
-
-        File file = new File("config.json");
-        if (!file.exists()) {
-            AppConfig defaultConfig = new AppConfig();
-            defaultConfig.setIsLicenseApproved(false);
-            defaultConfig.setIsFirstStart(true);
-            defaultConfig.setSyncTimeMin(1);
-            defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
-            saveAppConfig(defaultConfig);
-        }
-
         showNotification("Start background service", "Service started");
+        File file = new File("config.json");
+        int a = 0;
+        while (a == 0){
+            sleep( 5 * 1000);
+            if (file.exists()) {
+                a = 1;
+            }
+        }
+//        File file = new File("config.json");
+//        if (!file.exists()) {
+//            AppConfig defaultConfig = new AppConfig();
+//            defaultConfig.setIsLicenseApproved(false);
+//            defaultConfig.setIsFirstStart(true);
+//            defaultConfig.setSyncTimeMin(1);
+//            defaultConfig.setRootFolder(Paths.get("").toAbsolutePath().toString());
+//            saveAppConfig(defaultConfig);
+//        }
+
+
+
         String configContent = Files.readAllLines(file.toPath()).stream().collect(Collectors.joining("\n"));
         APP_CONFIG = new Gson().fromJson(configContent, AppConfig.class);
-        String DronType = APP_CONFIG.getDrones().get(0).getDroneType();
-        String DronModel = APP_CONFIG.getDrones().get(0).getDroneModel();
+
 
         Timer timer = new Timer(false);
         timer.schedule(new PeriodicCheck(), 0, APP_CONFIG.getSyncTimeMin() * 60 * 1000);

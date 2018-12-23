@@ -54,7 +54,7 @@ class PeriodicCheck extends TimerTask {
     private void doUpdateFlowByType(BoxDeveloperEditionAPIConnection api, String droneName, String currentVersion, DeviceType deviceType) {
         try {
             ArrayList<AbstractMap.SimpleEntry<String, String>> listDown = new ArrayList<>();
-            FileUtils.deleteDirectory(new File("downloads/"));
+            FileUtils.deleteDirectory(new File("temp/"));
 
             BoxFolder deviceUpdate = null;
             switch (deviceType) {
@@ -70,7 +70,7 @@ class PeriodicCheck extends TimerTask {
             Main.listFolder(deviceUpdate, 1);
             Map<String, String> map = Main.getFolder(deviceUpdate, 1);
 
-            String folderPrefix = "downloads" + File.separator;
+            String folderPrefix = "temp" + File.separator;
             String folderPref1 = ""; // uid
             for (String key : map.keySet()) {
 //                if (!key.equals("config.json")) {
@@ -88,8 +88,8 @@ class PeriodicCheck extends TimerTask {
             }
             Files.createDirectories(getUpdatePath(deviceType, folderPrefix, folderPref1));
 
+            Path temp_config = Paths.get("temp" + File.separator + deviceType + File.separator + "config.json");
             Path config = Paths.get("downloads" + File.separator + deviceType + File.separator + "config.json");
-
             String fileID;
             for (AbstractMap.SimpleEntry<String, String> aListDown : listDown) {
                 Path currentFilePath;
@@ -101,25 +101,47 @@ class PeriodicCheck extends TimerTask {
 //
 //                } else {
                     fileID = aListDown.getValue();
-                    folderPrefix = "downloads" + File.separator + deviceType + File.separator;
+                    folderPrefix = "temp" + File.separator + deviceType + File.separator;
                     currentFilePath = Paths.get(folderPrefix + aListDown.getKey());
 //                }
 //                if (!currentFilePath.toFile().exists()) {
                 Main.downloadFile(api, fileID, folderPrefix);
 //                }
             }
-            String configContent = Files.readAllLines(config).stream().collect(Collectors.joining("\n"));
-            DeviceParams UPDATE_CONFIG = new Gson().fromJson(configContent, DeviceParams.class);
-            System.out.println(UPDATE_CONFIG.getFWVersion());
-            System.out.println(UPDATE_CONFIG.getIsCriticalUpdate());
+            String temp_configContent = Files.readAllLines(temp_config).stream().collect(Collectors.joining("\n"));
+            String configContent = "";
 
-            // for now if FW version is double
 
-            double fwVersion = UPDATE_CONFIG.getFWVersion();
-            double currVerDouble = Double.parseDouble(currentVersion);
-            if (currVerDouble < fwVersion) {
-                Main.showNotification("Update required!", "Available new version " + UPDATE_CONFIG.getFWVersion() + "\nDrone: " + droneName);
+            if (new File(String.valueOf(config)).exists()){
+                configContent = Files.readAllLines(config).stream().collect(Collectors.joining("\n"));
+
             }
+
+
+            if (!temp_configContent.equals(configContent) || configContent.equals("")){
+                System.out.println(111111);
+                FileUtils.deleteDirectory(new File("downloads/"));
+                String folderPrefixD = "downloads" + File.separator;
+                Files.createDirectories(getUpdatePath(deviceType, folderPrefixD, folderPref1));
+                System.out.println(folderPrefix);
+                FileUtils.copyDirectory(new File(folderPrefix),
+                        new File(folderPrefixD + File.separator + deviceType + File.separator));
+                DeviceParams UPDATE_CONFIG = new Gson().fromJson(temp_configContent, DeviceParams.class);
+                System.out.println(UPDATE_CONFIG.getFWVersion());
+                System.out.println(UPDATE_CONFIG.getIsCriticalUpdate());
+
+                // for now if FW version is double
+
+                double fwVersion = UPDATE_CONFIG.getFWVersion();
+                double currVerDouble = Double.parseDouble(currentVersion);
+                if (currVerDouble < fwVersion) {
+                    Main.showNotification("Update required!", "Available new FW version " + UPDATE_CONFIG.getFWVersion() +
+                             "\nDrone: " + droneName);
+                }
+
+
+            }
+
         } catch (AWTException | IOException e) {
             e.printStackTrace();
         }
