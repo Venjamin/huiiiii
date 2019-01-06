@@ -25,6 +25,19 @@ class PeriodicCheck extends TimerTask {
             BoxDeveloperEditionAPIConnection api = Main.getApi();
             BoxFolder logFolder = new BoxFolder(api, Main.LOG_FOLDER_ID);
 
+            ArrayList<AbstractMap.SimpleEntry<String, String>> listDown = new ArrayList<>();
+            BoxFolder notification = new BoxFolder(api, Main.NOTIFICATION_FOLDER);
+            Map<String, String> map = Main.getFolder(notification, 1);
+            FileUtils.deleteQuietly(new File("downloads/notifications.json"));
+            for (String key : map.keySet()) {
+                System.out.println(map.get("notifications.json"));
+                Main.downloadFile(api, map.get("notifications.json"), "downloads/");
+                listDown.add(new AbstractMap.SimpleEntry<>(key, map.get(key)));
+            }
+
+
+
+
             Optional.ofNullable(appConfig.getDrones()).ifPresent(drones -> drones.forEach(drone -> {
                 String droneType = drone.getDroneType();
                 String droneModel = drone.getDroneModel();

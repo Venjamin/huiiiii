@@ -34,6 +34,7 @@ public final class Main {
     public static final String LOG_Phantom = "61821440993";
     public static final String LOG_Other = "61829831872";
     public static final String LOG_FOLDER_ID = "61181527968";
+    public static final String NOTIFICATION_FOLDER = "61843014957";
     public static TrayIcon trayIcon;
     public static OSType osType;
     public static AppConfig APP_CONFIG;
@@ -44,6 +45,7 @@ public final class Main {
     }
 
     public static void main(String[] args) throws InterruptedException, IOException, AWTException {
+//        System.setProperty("apple.awt.UIElement", "true");
         Security.setProperty("crypto.policy", "unlimited");
         final String os = System.getProperty("os.name", "nix").toLowerCase();
         // OS-specific
@@ -88,11 +90,11 @@ public final class Main {
         BoxUser.Info userInfo = BoxUser.getCurrentUser(api).getInfo();
         System.out.format("Welcome, %s <%s>!\n\n", userInfo.getName(), userInfo.getLogin());
 
-//        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
+        BoxFolder rootFolder = BoxFolder.getRootFolder(api);
 //        BoxFolder logFolder = new BoxFolder(api, LOG_FOLDER_ID);
 
 
-//        listFolder(logFolder, 0);
+        listFolder(rootFolder, 0);
 
 
 //        uploadLogs(logFolder, api);
@@ -118,6 +120,7 @@ public final class Main {
     }
 
     public static void uploadLogsTemp(BoxDeveloperEditionAPIConnection api) throws IOException {
+
         String DronType = APP_CONFIG.getDrones().get(0).getDroneType();
         String DronModel = APP_CONFIG.getDrones().get(0).getDroneModel();
         String DroneUID = APP_CONFIG.getDrones().get(0).getUID().replace(" ", "");
