@@ -279,6 +279,7 @@ public final class Main {
         BoxFile.Info info = file.getInfo();
 
         if (!Paths.get(path + info.getName()).toFile().exists()) {
+            Files.createDirectories(Paths.get(path));
             FileOutputStream stream = new FileOutputStream(path + info.getName());
             file.download(stream);
             stream.close();
