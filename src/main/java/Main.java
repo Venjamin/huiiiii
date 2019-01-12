@@ -403,7 +403,7 @@ public final class Main {
         if (Objects.isNull(trayIcon)) {
             trayIcon = new TrayIcon(image);
             trayIcon.setImageAutoSize(true);
-            trayIcon.setToolTip("ParaZero service v1.0.9b");
+            trayIcon.setToolTip("ParaZero service v1.0.10");
             tray.add(trayIcon);
         }
         trayIcon.displayMessage(title, msg, TrayIcon.MessageType.INFO);
