@@ -13,6 +13,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 
+import static com.sun.corba.se.impl.util.Utility.printStackTrace;
+
 @NoArgsConstructor
 class PeriodicCheck extends TimerTask {
 
@@ -48,9 +50,14 @@ class PeriodicCheck extends TimerTask {
                 }
                 try {
                     doUpdateFlowByType(api, droneName, drone.getSWVersion() + "", drone.getDeviceType());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
 //                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID().replace(" ", ""));
                     Main.uploadLogsTemp(api);
-                } catch (Exception e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 

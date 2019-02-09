@@ -141,14 +141,17 @@ public final class Main {
                 }
                 case "M200": {
                     typeFolder = new BoxFolder(api, LOG_M200);
+                    DronModel = "M200";
                     break;
                 }
                 case "M600": {
                     typeFolder = new BoxFolder(api, LOG_M600);
+                    DronModel = "M600";
                     break;
                 }
                 default: {
                     typeFolder = new BoxFolder(api, LOG_Other);
+                    DronModel = "Other";
                     break;
                 }
             }
