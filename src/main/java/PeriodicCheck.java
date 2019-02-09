@@ -46,11 +46,11 @@ class PeriodicCheck extends TimerTask {
                 if (Objects.isNull(droneName) || droneName.isEmpty()) {
                     droneName = drone.getUID().replace(" ", "");
                 }
-                doUpdateFlowByType(api, droneName, drone.getSWVersion() + "", drone.getDeviceType());
                 try {
+                    doUpdateFlowByType(api, droneName, drone.getSWVersion() + "", drone.getDeviceType());
 //                    Main.uploadLogs(logFolder, api, drone.getProduct(), drone.getUID().replace(" ", ""));
                     Main.uploadLogsTemp(api);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 
