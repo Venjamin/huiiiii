@@ -112,7 +112,7 @@ public final class Main {
     public static List<String> getListFileNames(String path) {
         File direktory = new File(path);
         String[] directories = direktory.list((current, name) -> new File(current, name).isFile());
-        System.out.println(Arrays.toString(directories));
+//        System.out.println(Arrays.toString(directories));
 
         return new ArrayList<>(Arrays.asList(directories));
     }
@@ -157,7 +157,7 @@ public final class Main {
             }
             folderId = createFolderAndGetId(typeFolder, DronModel);
             listFolder(typeFolder, 1);
-            System.out.println(folderId);
+//            System.out.println(folderId);
             BoxFolder DronModelFolder = new BoxFolder(api, folderId);
             folderId = createFolderAndGetId(DronModelFolder, DroneUID);
             BoxFolder logsUploadFolder = new BoxFolder(api, folderId);
@@ -204,7 +204,7 @@ public final class Main {
                             uploadFile(logsUploadFolder, localLogFolder + localDeviceFolder + "/" +
                                     localDeviceIdsFolder + "/" + aFilesToUploaad, aFilesToUploaad);
                         }
-                        System.out.println(111);
+//                        System.out.println(111);
 
                         HashMap<String, String> existingFolders = getFolder(logsUploadFolder, 1);
                         for (String key : existingFolders.keySet()) {
@@ -377,8 +377,8 @@ public final class Main {
                 indent += "    ";
             }
 
-            System.out.println(indent + itemInfo.getName());
-            System.out.println(indent + itemInfo.getID());
+//            System.out.println(indent + itemInfo.getName());
+//            System.out.println(indent + itemInfo.getID());
             if (itemInfo instanceof BoxFolder.Info) {
                 BoxFolder childFolder = (BoxFolder) itemInfo.getResource();
                 if (depth < MAX_DEPTH) {
@@ -414,7 +414,7 @@ public final class Main {
         if (Objects.isNull(trayIcon)) {
             trayIcon = new TrayIcon(image);
             trayIcon.setImageAutoSize(true);
-            trayIcon.setToolTip("ParaZero service v1.0.18");
+            trayIcon.setToolTip("ParaZero service v1.0.19");
             tray.add(trayIcon);
         }
         trayIcon.displayMessage(title, msg, TrayIcon.MessageType.INFO);

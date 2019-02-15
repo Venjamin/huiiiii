@@ -68,7 +68,7 @@ class PeriodicCheck extends TimerTask {
             e.printStackTrace();
         }
 
-        System.out.println("Hello World!");
+        System.out.println("Flow finished!");
     }
 
     private void doUpdateFlowByType(BoxDeveloperEditionAPIConnection api, String droneName, String currentVersion, DeviceType deviceType) {
@@ -139,7 +139,7 @@ class PeriodicCheck extends TimerTask {
 
 
             if (!temp_configContent.equals(configContent) || configContent.equals("")){
-                System.out.println(111111);
+//                System.out.println(111111);
                 FileUtils.deleteDirectory(new File("downloads/"));
                 String folderPrefixD = "downloads" + File.separator;
                 Files.createDirectories(getUpdatePath(deviceType, folderPrefixD, folderPref1));
